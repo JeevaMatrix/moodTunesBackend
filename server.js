@@ -9,7 +9,10 @@ const User = require('./models/User');
 const Log = require('./models/Log');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://moodtuner.netlify.app", // your deployed frontend
+  credentials: true // if you're using cookies or auth headers
+}));
 app.use(express.json());
 
 // MongoDB Connection
