@@ -9,10 +9,24 @@ const User = require('./models/User');
 const Log = require('./models/Log');
 
 const app = express();
+// app.use(cors({
+//   origin: "https://moodtuner.netlify.app", // your deployed frontend
+//   credentials: true // if you're using cookies or auth headers
+// }));
+
+const allowedOrigins = ['http://localhost:3000', 'https://moodtuner.netlify.app'];
+
 app.use(cors({
-  origin: "https://moodtuner.netlify.app", // your deployed frontend
-  credentials: true // if you're using cookies or auth headers
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
+
 app.use(express.json());
 
 // MongoDB Connection
